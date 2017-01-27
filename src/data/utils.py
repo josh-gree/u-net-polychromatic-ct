@@ -6,7 +6,7 @@ from odl_fbp import fbp_op
 import numpy as np
 
 Nx, Ny = 256, 256
-Np_lim, Nd_lim = 70, 500
+Np_lim, Nd_lim = 20, 50
 Np_full, Nd_full = 1000, 500
 
 reco_space = odl.uniform_discr([-1, -1], [1, 1], [Nx, Ny], dtype='float32')

@@ -2,6 +2,9 @@
 __pycache__/
 *.py[cod]
 
+# scratch
+scratch*.ipynb
+
 # C and Fortran extensions
 *.so
 *.dylib
