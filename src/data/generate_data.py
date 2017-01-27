@@ -6,7 +6,7 @@ import sys
 import os
 
 
-Np_lim,Nd_lim = sys.argv[1],sys.argv[2]
+Np_lim,Nd_lim = int(sys.argv[1]),int(sys.argv[2])
 make_data = make_make_data(Np_lim,Nd_lim)
 
 train_path = 'train_{}_{}/'.format(Np_lim,Nd_lim)
