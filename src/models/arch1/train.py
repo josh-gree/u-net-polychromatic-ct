@@ -167,8 +167,8 @@ with tf.Session() as sess:
     N_epoch = 1
     for k in range(N_epoch):
         batch_gen = gen(path,1)
-            for i in range(500):
-            inp,label = next(batch_gen)
-            curr_loss = sess.run(loss,feed_dict={x:inp,y:label})
-            _ = sess.run(train_op,feed_dict={x:inp,y:label})
-            print("current loss: {}".format(curr_loss))
+        for i in range(500):
+        inp,label = next(batch_gen)
+        curr_loss = sess.run(loss,feed_dict={x:inp,y:label})
+        _ = sess.run(train_op,feed_dict={x:inp,y:label})
+        print("current loss: {}".format(curr_loss))
