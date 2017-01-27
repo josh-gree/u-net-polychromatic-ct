@@ -1,6 +1,12 @@
 # imports
 import tensorflow as tf
 import numpy as np
+import sys
+
+sys.path.append("../../tools/")
+from data_generator import gen
+
+path = sys.argv[1]
 
 # functions
 def max_pool(x, k=2):
@@ -156,4 +162,13 @@ out = tf.add(resid,x,name='out')
 loss = tf.nn.l2_loss(out-y)
 train_op = tf.train.AdamOptimizer(1e-4).minimize(loss)
 
-import IPython; IPython.embed()
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    N_epoch = 1
+    for k in range(N_epoch):
+        batch_gen = gen(path,1)
+            for i in range(500):
+            inp,label = next(batch_gen)
+            curr_loss = sess.run(loss,feed_dict={x:inp,y:label})
+            _ = sess.run(train_op,feed_dict={x:inp,y:label})
+            print("current loss: {}".format(curr_loss))
