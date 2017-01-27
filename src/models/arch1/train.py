@@ -7,6 +7,7 @@ sys.path.append("../../tools/")
 from data_generator import gen
 
 path = sys.argv[1]
+fname = path.split('/')[-1]
 
 # functions
 def max_pool(x, k=2):
@@ -160,15 +161,22 @@ resid = conv2d(d4_b, 1, k_h=1, k_w=1, name='residual')
 out = tf.add(resid,x,name='out')
 
 loss = tf.nn.l2_loss(out-y)
+cost_sum = tf.summary.scalar('cost', loss) # add sumary to monitor loss
+
 train_op = tf.train.AdamOptimizer(1e-4).minimize(loss)
+saver = tf.train.Saver()
 
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
+    now = datetime.datetime.now().strftime("%I_%M_%S")
+    summary_writer = tf.summary.FileWriter('tfboard/model_{}_{}'.format(fname,now), sess.graph)
     N_epoch = 1
     for k in range(N_epoch):
         batch_gen = gen(path,1)
         for i in range(500):
-        inp,label = next(batch_gen)
-        curr_loss = sess.run(loss,feed_dict={x:inp,y:label})
-        _ = sess.run(train_op,feed_dict={x:inp,y:label})
-        print("current loss: {}".format(curr_loss))
+            inp,label = next(batch_gen)
+            curr_loss = sess.run(loss,feed_dict={x:inp,y:label})
+            _ = sess.run(train_op,feed_dict={x:inp,y:label})
+            if i % 50 == 0
+                saver.save(sess,'checkpoints/model_{}_{}'.format(fname,now))
+            print("iter: {}, current loss: {}".format(i,curr_loss))
